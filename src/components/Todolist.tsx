@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, KeyboardEvent } from 'react';
 import { TaskPropsType, filterValuesType } from '../App';
 import { Button } from './Button';
 
@@ -41,8 +41,18 @@ export const Todolist = ({ title, tasks, removeTask, addTask }: TodolistPropsTyp
     //
 
     const addTaskHandler = () => {
-
+        addTask(taskTitle)
+        setTaskTitle("")
     }
+
+    const addTaskOnkeyUpHandler = taskTitle.length === 0
+        ? undefined
+        : (e: KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === 'Enter') {
+                addTaskHandler()
+            }
+        }
+
     //
 
     const tasksList: JSX.Element = filteredTasks.length === 0
@@ -69,9 +79,11 @@ export const Todolist = ({ title, tasks, removeTask, addTask }: TodolistPropsTyp
         <div className='todolist'>
             <h3>{title}</h3>
             <div>
-                <input value={taskTitle} onChange={(e) => {
-                    setTaskTitle(e.currentTarget.value)
-                }} />
+                <input
+                    value={taskTitle}
+                    onChange={(e) => { setTaskTitle(e.currentTarget.value) }}
+                    onKeyUp={addTaskOnkeyUpHandler}
+                />
                 <Button
                     title={'+'}
                     onClick={addTaskHandler}
