@@ -3,12 +3,26 @@
   display: flex;
 }
 
-.App>div {
+.App > div {
   margin-right: 50px;
 }
 
-.todolist {
-  background-color: crimson;
-  padding: 20px;
-  border-radius: 5px;
+.error {
+  border: red 1px solid;
+}
+
+.error-message {
+  color: red;
+}
+
+.active-filter {
+  background-color: lightgreen;
+}
+
+.is-done {
+  opacity: 0.5;
+}
+.todolist-title-container {
+  display: flex;
+  align-items: center;
 }
