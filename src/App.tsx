@@ -7,7 +7,7 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
@@ -27,7 +27,7 @@ export type TaskType = {
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
-type TodolistType = {
+export type TodolistType = {
     id: string
     title: string
     filter: FilterValuesType
@@ -40,7 +40,10 @@ export type TasksStateType = {
 type ThemeMode = 'dark' | 'light'
 
 function App() {
+    //Business logic level:
 
+
+    // Global states:
     let todolistID1 = v1()
     let todolistID2 = v1()
 
@@ -60,7 +63,7 @@ function App() {
             { id: v1(), title: 'GraphQL', isDone: false },
         ],
     })
-
+    //CRUD tasks
     const removeTask = (taskId: string, todolistId: string) => {
         const newTodolistTasks = { ...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId) }
         setTasks(newTodolistTasks)
@@ -85,6 +88,15 @@ function App() {
         setTasks(newTodolistTasks)
     }
 
+
+    const updateTask = (todolistId: string, taskId: string, title: string) => {
+        const newTodolistTasks = {
+            ...tasks,
+            [todolistId]: tasks[todolistId].map(t => t.id === taskId ? { ...t, title } : t)
+        }
+        setTasks(newTodolistTasks)
+    }
+    //CRUD todolists
     const changeFilter = (filter: FilterValuesType, todolistId: string) => {
         const newTodolists = todolists.map(tl => {
             return tl.id === todolistId ? { ...tl, filter } : tl
@@ -107,19 +119,13 @@ function App() {
         setTasks({ ...tasks, [todolistId]: [] })
     }
 
-    const updateTask = (todolistId: string, taskId: string, title: string) => {
-        const newTodolistTasks = {
-            ...tasks,
-            [todolistId]: tasks[todolistId].map(t => t.id === taskId ? { ...t, title } : t)
-        }
-        setTasks(newTodolistTasks)
-    }
-
     const updateTodolist = (todolistId: string, title: string) => {
         const newTodolists = todolists.map(tl => tl.id === todolistId ? { ...tl, title } : tl)
         setTodolists(newTodolists)
     }
 
+
+    // THEMES
     const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
     const theme = createTheme({
@@ -144,7 +150,7 @@ function App() {
     return (
         <div className="App" >
             <ThemeProvider theme={theme}>
-                <CssBaseline/>
+                <CssBaseline />
                 <Box sx={{ flexGrow: 1, marginBottom: 10 }}>
                     <AppBar position="fixed">
                         <Toolbar>
