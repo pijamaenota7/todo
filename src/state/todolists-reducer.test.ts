@@ -1,19 +1,32 @@
-import { ActionType, AddTodolistActionCreator, ChangeTodolistFilterActionCreator, ChangeTodolistTitleActionCreator, RemoveTodolistActionCreator, todolistsReducer } from './todolist-reducer'; // Убедитесь, что путь к вашему редьюсеру верен
+import { ActionType, AddTodolistActionCreator, ChangeTodolistFilterActionCreator, ChangeTodolistTitleActionCreator, RemoveTodolistActionCreator, todolistsReducer } from './todolists-reducer'; // Убедитесь, что путь к вашему редьюсеру верен
 import { v1 } from 'uuid';
 import { TasksStateType, TodolistType } from '../App'; // Убедитесь, что путь к вашему типу верен
 import { tasksReducer } from './tasks-reducer';
 
-test('correct todolist should be removed', () => {
-    let todolistId1 = v1();
-    let todolistId2 = v1();
+
+
+let todolistId1: string
+let todolistId2: string
+
+// 1. Стартовый state
+let startState: Array<TodolistType>
+
+
+beforeEach(() => {
+    todolistId1 = v1();
+    todolistId2 = v1();
 
     // 1. Стартовый state
-    const startState: TodolistType[] = [
+    startState = [
         { id: todolistId1, title: 'What to learn', filter: 'all' },
         { id: todolistId2, title: 'What to buy', filter: 'all' },
     ];
+})
 
-    // 2. Действие
+
+
+
+test('correct todolist should be removed', () => {
 
     const endState = todolistsReducer(startState, RemoveTodolistActionCreator(todolistId1));
 
@@ -26,14 +39,6 @@ test('correct todolist should be removed', () => {
 
 
 test('correct todolist should be added', () => {
-    let todolistId1 = v1()
-    let todolistId2 = v1()
-
-    const startState: TodolistType[] = [
-        { id: todolistId1, title: 'What to learn', filter: 'all' },
-        { id: todolistId2, title: 'What to buy', filter: 'all' },
-    ]
-
 
     const endState = todolistsReducer(startState, AddTodolistActionCreator('New Todolist'))
 
@@ -43,13 +48,7 @@ test('correct todolist should be added', () => {
 
 
 test('correct todolist should change its name', () => {
-    let todolistId1 = v1()
-    let todolistId2 = v1()
 
-    const startState: TodolistType[] = [
-        { id: todolistId1, title: 'What to learn', filter: 'all' },
-        { id: todolistId2, title: 'What to buy', filter: 'all' },
-    ]
 
 
     const endState = todolistsReducer(startState, ChangeTodolistTitleActionCreator(todolistId2, 'New Todolist'))
@@ -60,13 +59,6 @@ test('correct todolist should change its name', () => {
 
 
 test('correct filter of todolist should be changed', () => {
-    let todolistId1 = v1()
-    let todolistId2 = v1()
-
-    const startState: TodolistType[] = [
-        { id: todolistId1, title: 'What to learn', filter: 'all' },
-        { id: todolistId2, title: 'What to buy', filter: 'all' },
-    ]
 
 
     const endState = todolistsReducer(startState, ChangeTodolistFilterActionCreator(todolistId2, 'completed'))

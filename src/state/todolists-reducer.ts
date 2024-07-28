@@ -32,10 +32,12 @@ export type ChangeTodolistTitleType = {
     }
 }
 
+const initalState: Array<TodolistType> = []
+
 
 export type ActionType = AddTodolistActionType | RemoveTodolistActionType | ChangeTodolistFilterActionType | ChangeTodolistTitleType
 
-export const todolistsReducer = (todolists: Array<TodolistType>, action: ActionType): Array<TodolistType> => {
+export const todolistsReducer = (todolists: Array<TodolistType> = initalState, action: ActionType): Array<TodolistType> => {
 
 
 

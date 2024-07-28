@@ -1,6 +1,6 @@
 import { v1 } from "uuid";
 import { FilterValuesType, TasksStateType, TaskType, TodolistType } from "../App";
-import { AddTodolistActionType, RemoveTodolistActionType } from "./todolist-reducer";
+import { AddTodolistActionType, RemoveTodolistActionType } from "./todolists-reducer";
 
 
 export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
@@ -16,7 +16,13 @@ export type ActionType = RemoveTaskActionType
     | AddTodolistActionType
     | RemoveTodolistActionType
 
-export const tasksReducer = (state: TasksStateType, action: ActionType): TasksStateType => {
+
+
+const initalState: TasksStateType = {
+
+}
+
+export const tasksReducer = (state: TasksStateType = initalState, action: ActionType): TasksStateType => {
 
 
 
