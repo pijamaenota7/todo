@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 import React, { useCallback, useReducer, useState } from 'react';
 import './App.css';
 import { TaskType, Todolist } from './Todolist';
 import { v1 } from 'uuid';
 import { AddItemForm } from './AddItemForm';
-=======
-import React, {useReducer, useState} from 'react';
-import './App.css';
-import {TaskType, Todolist} from './Todolist';
-import {v1} from 'uuid';
-import {AddItemForm} from './AddItemForm';
->>>>>>> b02bb755378cbca84f4838614b73c2527a867893
 import {
     addTodolistAC,
     changeTodolistFilterAC,
@@ -18,19 +10,11 @@ import {
     removeTodolistAC,
     todolistsReducer
 } from './state/todolists-reducer';
-<<<<<<< HEAD
 import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer } from './state/tasks-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from './state/store';
 import { AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography } from "@mui/material";
 import { Menu } from "@mui/icons-material";
-=======
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './state/tasks-reducer';
-import {useDispatch, useSelector} from 'react-redux';
-import {AppRootStateType} from './state/store';
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
-import {Menu} from "@mui/icons-material";
->>>>>>> b02bb755378cbca84f4838614b73c2527a867893
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistType = {
@@ -52,7 +36,6 @@ function AppWithRedux() {
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch();
 
-<<<<<<< HEAD
     const removeTask = useCallback((id: string, todolistId: string) => {
         const action = removeTaskAC(id, todolistId);
         dispatch(action);
@@ -92,58 +75,13 @@ function AppWithRedux() {
         const action = addTodolistAC(title);
         dispatch(action);
     }, [dispatch])
-=======
-    function removeTask(id: string, todolistId: string) {
-        const action = removeTaskAC(id, todolistId);
-        dispatch(action);
-    }
-
-    function addTask(title: string, todolistId: string) {
-        const action = addTaskAC(title, todolistId);
-        dispatch(action);
-    }
-
-    function changeStatus(id: string, isDone: boolean, todolistId: string) {
-        const action = changeTaskStatusAC(id, isDone, todolistId);
-        dispatch(action);
-    }
-
-    function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
-        const action = changeTaskTitleAC(id, newTitle, todolistId);
-        dispatch(action);
-    }
-
-    function changeFilter(value: FilterValuesType, todolistId: string) {
-        const action = changeTodolistFilterAC(todolistId, value);
-        dispatch(action);
-    }
-
-    function removeTodolist(id: string) {
-        const action = removeTodolistAC(id);
-        dispatch(action);
-    }
-
-    function changeTodolistTitle(id: string, title: string) {
-        const action = changeTodolistTitleAC(id, title);
-        dispatch(action);
-    }
-
-    function addTodolist(title: string) {
-        const action = addTodolistAC(title);
-        dispatch(action);
-    }
->>>>>>> b02bb755378cbca84f4838614b73c2527a867893
 
     return (
         <div className="App">
             <AppBar position="static">
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu">
-<<<<<<< HEAD
                         <Menu />
-=======
-                        <Menu/>
->>>>>>> b02bb755378cbca84f4838614b73c2527a867893
                     </IconButton>
                     <Typography variant="h6">
                         News
@@ -152,18 +90,12 @@ function AppWithRedux() {
                 </Toolbar>
             </AppBar>
             <Container fixed>
-<<<<<<< HEAD
                 <Grid container style={{ padding: "20px" }}>
                     <AddItemForm addItem={addTodolist} />
-=======
-                <Grid container style={{padding: "20px"}}>
-                    <AddItemForm addItem={addTodolist}/>
->>>>>>> b02bb755378cbca84f4838614b73c2527a867893
                 </Grid>
                 <Grid container spacing={3}>
                     {
                         todolists.map(tl => {
-<<<<<<< HEAD
 
 
                             return <Grid item key={tl.id}>
@@ -172,24 +104,6 @@ function AppWithRedux() {
                                         id={tl.id}
                                         title={tl.title}
                                         tasks={tasks[tl.id]}
-=======
-                            let allTodolistTasks = tasks[tl.id];
-                            let tasksForTodolist = allTodolistTasks;
-
-                            if (tl.filter === "active") {
-                                tasksForTodolist = allTodolistTasks.filter(t => t.isDone === false);
-                            }
-                            if (tl.filter === "completed") {
-                                tasksForTodolist = allTodolistTasks.filter(t => t.isDone === true);
-                            }
-
-                            return <Grid item key={tl.id}>
-                                <Paper style={{padding: "10px"}}>
-                                    <Todolist
-                                        id={tl.id}
-                                        title={tl.title}
-                                        tasks={tasksForTodolist}
->>>>>>> b02bb755378cbca84f4838614b73c2527a867893
                                         removeTask={removeTask}
                                         changeFilter={changeFilter}
                                         addTask={addTask}
