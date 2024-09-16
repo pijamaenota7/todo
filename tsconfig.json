@@ -21,5 +21,5 @@
   },
   "include": [
     "src"
-  ]
+, "src/stories/EditableSpan.stories.tsx", ".storybook/test-runner.ts"  ]
 }

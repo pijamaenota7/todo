@@ -2,16 +2,17 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { action } from '@storybook/addon-actions'
 
-import { AddItemForm, AddItemFormPropsType } from '../AddItemForm';
-import { ChangeEvent, KeyboardEvent, memo, useState } from 'react';
-import { IconButton, TextField } from '@mui/material';
+import { AddItemForm } from '../AddItemForm';
+import { Task, TaskPropsType } from '../Task';
+import { useState } from 'react';
 import React from 'react';
-import { AddBox } from '@mui/icons-material';
+
+
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
-const meta: Meta<typeof AddItemForm> = {
-  title: 'TODOLISTS/AddItemForm',
-  component: AddItemForm,
+const meta: Meta<typeof Task> = {
+  title: 'TODOLISTS/Task',
+  component: Task,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: 'centered',
@@ -20,62 +21,46 @@ const meta: Meta<typeof AddItemForm> = {
   tags: ['autodocs'],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
-    addItem: {
-      description: 'button clicked inside form'
-    }
+
   },
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-  args: { addItem: fn() },
+  args: {
+    task: { id: '12312321ss', isDone: false, title: 'Js' },
+    todolistId: 'adsdas2',
+    removeTask: fn(),
+    changeTaskStatus: fn(),
+    changeTaskTitle: fn(),
+  },
 };
 
 export default meta;
-type Story = StoryObj<typeof AddItemForm>;
+type Story = StoryObj<typeof Task>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const AddItemFormStory: Story = {};
+export const TaskIsNotDone: Story = {
 
-const AddItemFormWithError = memo((props: AddItemFormPropsType) => {
-  let [title, setTitle] = useState("")
-  let [error, setError] = useState<string | null>("Title is required")
+};
+export const TaskIsDone: Story = {
+  args: {
+    task: { id: '12312321ss1', isDone: true, title: 'CSS' },
 
-  const addItem = () => {
-    if (title.trim() !== "") {
-      props.addItem(title);
-      setTitle("");
-    } else {
-      setError("Title is required");
-    }
+  }
+};
+
+const ToggledTask = () => {
+
+  const [task, setTask] = useState({ id: '12312321ss', isDone: false, title: 'Js' })
+  function changeTaskStatus(id: string, isDone: boolean) {
+    setTask({ ...task, isDone })
+  }
+  function changeTaskTitle(id: string, newTitle: string) {
+    setTask({ ...task, title: newTitle })
   }
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.currentTarget.value)
-  }
-
-  const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (error) setError(null);
-
-    if (e.charCode === 13) {
-      addItem();
-    }
-  }
-
-  return <div>
-    <TextField variant="outlined"
-      error={!!error}
-      value={title}
-      onChange={onChangeHandler}
-      onKeyPress={onKeyPressHandler}
-      label="Title"
-      helperText={error}
-    />
-    <IconButton color="primary" onClick={addItem}>
-      <AddBox />
-    </IconButton>
-  </div>
-})
-
-export const AddItemFormWithErrorStory: Story = {
-  // render: (args: AddItemFormPropsType) => <AddItemFormWithError addItem={args.addItem} />
-
-  render: () => <AddItemFormWithError addItem={action('Button clicked inside form')} />
+  return <Task changeTaskStatus={changeTaskStatus} changeTaskTitle={changeTaskTitle} removeTask={action('removeTask')} task={task} todolistId={'13312123123s'} />
 }
+
+export const ToggledTaskStory: Story = {
+  render: (args: TaskPropsType) => <ToggledTask />
+}
+

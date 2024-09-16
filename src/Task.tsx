@@ -6,7 +6,7 @@ import { Delete } from '@mui/icons-material';
 
 
 
-type TaskPropsType = {
+export type TaskPropsType = {
     task: TaskType
     todolistId: string
     removeTask: (taskId: string, todolistId: string) => void
